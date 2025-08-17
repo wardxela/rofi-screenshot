@@ -180,7 +180,6 @@ check_deps slop
 check_deps ffcast
 check_deps ffmpeg
 check_deps xclip
-check_deps rofi
 
 # rebind long args as short ones
 for arg in "$@"; do

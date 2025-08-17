@@ -1,6 +1,6 @@
 ## rofi-screenshot
 
-![Preview](https://imgur.com/a/2jDHgTQ)
+![Preview](https://i.imgur.com/s1wqQcM.gif)
 
 I got sick of not having a simple solution to take screenshots and screencasts.
 

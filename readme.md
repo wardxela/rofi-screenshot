@@ -1,16 +1,26 @@
 ## rofi-screenshot
 
-![](https://imgur.com/7io5BKJ.gif)
+![Preview](https://i.imgur.com/s1wqQcM.gif)
 
-I got sick of not having a simple solution to take screenshots and screencasts. 
+I got sick of not having a simple solution to take screenshots and screencasts.
 
 Plus, there's so many different things I might want to do I struggle to find key bindings for all of them. So, I created a script to show and execute various screen capture related commands in Rofi.
 
 ### Features
 * Capture a region to the clipboard or a directory
+* Capture a window to the clipboard or a directory
 * Capture the whole screen to the clipboard or a directory
-* Record a specific region and save as a gif or MP4
+* Record a region and save as a gif or MP4
+* Record a window and save as a gif or MP4
 * Record the whole screen and save as a gif or MP4
+
+### Notable differences from original version
+* Plugin is compatible with [rofi script](https://davatorium.github.io/rofi/current/rofi-script.5/) API
+* Works with combi mode
+* Notification daemon is replaced with [dunst](https://dunst-project.org/) (I might consider making it optional and modifiable in the future)
+* More user-friendly names for the options + Adwaita icons
+* Added metadata for options to make it easier to find them
+* Slightly better error handling
 
 ### Installation
 Make sure you have the required [dependencies](#dependencies) installed.

@@ -78,6 +78,14 @@ capture_screen_to_file() {
   dunstify -a "$app_name" "Screenshot" "Saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
 
+extract_text_from_region() {
+  tmpfile="/tmp/screenshot-$1.png"
+  ffcast -q "$(slop -n -f '-g %g')" png "$tmpfile"
+  tesseract "$tmpfile" - -l eng+rus | xclip -selection clipboard
+  rm "$tmpfile"
+  dunstify -a "$app_name" "Screenshot" "Text copied to Clipboard"
+}
+
 record_region_as_mp4() {
   dunstify -a "$app_name" "Record" "Select a region to record"
   ffcast -q "$(slop -n -f '-g %g ' && countdown)" rec "$screenshot_directory/$1.mp4"
@@ -151,6 +159,7 @@ show_options() {
   echo -e "Capture Window (File)\0icon\x1fimage-x-generic\x1fmeta\x1fScreenshot"
   echo -e "Capture Screen (Clipboard)\0icon\x1fimage-x-generic\x1fmeta\x1fScreenshot"
   echo -e "Capture Screen (File)\0icon\x1fimage-x-generic\x1fmeta\x1fScreenshot"
+  echo -e "Extract Text From Region\0icon\x1fscanner"
   echo -e "Record Region (File, GIF)\0icon\x1fvideo-x-generic"
   echo -e "Record Region (File, MP4)\0icon\x1fvideo-x-generic"
   echo -e "Record Window (File, GIF)\0icon\x1fvideo-x-generic"
@@ -180,6 +189,7 @@ check_deps slop
 check_deps ffcast
 check_deps ffmpeg
 check_deps xclip
+check_deps tesseract
 
 # rebind long args as short ones
 for arg in "$@"; do
@@ -251,6 +261,10 @@ case $1 in
     ;;
   'Capture Screen (File)')
     coproc ( capture_screen_to_file "$dt" > /dev/null 2>&1 )
+    exit 0
+    ;;
+  'Extract Text From Region')
+    coproc ( extract_text_from_region "$dt" > /dev/null 2>&1 )
     exit 0
     ;;
   'Record Region (File, MP4)')

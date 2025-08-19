@@ -27,11 +27,11 @@ video_to_gif() {
 }
 
 countdown() {
-  dunstify -a "$app_name" "Countdown" "Recording in 3" -t 1000
+  notify-send -a "$app_name" "Countdown" "Recording in 3" -t 1000
   sleep 1
-  dunstify -a "$app_name" "Countdown" "Recording in 2" -t 1000
+  notify-send -a "$app_name" "Countdown" "Recording in 2" -t 1000
   sleep 1
-  dunstify -a "$app_name" "Countdown" "Recording in 1" -t 1000
+  notify-send -a "$app_name" "Countdown" "Recording in 1" -t 1000
   sleep 1
 }
 
@@ -40,12 +40,12 @@ capture_region_to_clipboard() {
   ffcast -q "$(slop -n -f '-g %g')" png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Region saved to Clipboard"
+  notify-send -a "$app_name" "Screenshot" "Region saved to Clipboard"
 }
 
 capture_region_to_file() {
   ffcast -q "$(slop -n -f '-g %g')" png "$screenshot_directory/$1.png"
-  dunstify -a "$app_name" "Screenshot" "Region saved to ${screenshot_directory//${HOME}/~}/$1.png"
+  notify-send -a "$app_name" "Screenshot" "Region saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
 
 capture_window_to_clipboard() {
@@ -53,12 +53,12 @@ capture_window_to_clipboard() {
   ffcast -q -w png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Window saved to Clipboard"
+  notify-send -a "$app_name" "Screenshot" "Window saved to Clipboard"
 }
 
 capture_window_to_file() {
   ffcast -q -w png "$screenshot_directory/$1.png"
-  dunstify -a "$app_name" "Screenshot" "Window saved to ${screenshot_directory//${HOME}/~}/$1.png"
+  notify-send -a "$app_name" "Screenshot" "Window saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
 
 capture_screen_to_clipboard() {
@@ -66,12 +66,12 @@ capture_screen_to_clipboard() {
   ffcast -q png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Screenshot saved to Clipboard"
+  notify-send -a "$app_name" "Screenshot" "Screenshot saved to Clipboard"
 }
 
 capture_screen_to_file() {
   ffcast -q png "$screenshot_directory/$1.png"
-  dunstify -a "$app_name" "Screenshot" "Saved to ${screenshot_directory//${HOME}/~}/$1.png"
+  notify-send -a "$app_name" "Screenshot" "Saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
 
 extract_text_from_region() {
@@ -79,61 +79,61 @@ extract_text_from_region() {
   ffcast -q "$(slop -n -f '-g %g')" png "$tmpfile"
   tesseract "$tmpfile" - -l eng+rus | xclip -selection clipboard
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Text saved to Clipboard"
+  notify-send -a "$app_name" "Extract" "Text saved to Clipboard"
 }
 
 record_region_as_mp4() {
   ffcast -q "$(slop -n -f '-g %g ' && countdown)" rec "$screenshot_directory/$1.mp4"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
 }
 
 record_region_as_gif() {
   tmpfile="/tmp/record-$1.mp4"
   ffcast -q "$(slop -n -f '-g %g ' && countdown)" rec "$tmpfile"
-  dunstify -a "$app_name" "Record" "Converting to gif… (can take a while)"
+  notify-send -a "$app_name" "Record" "Converting to gif… (can take a while)"
   video_to_gif "$tmpfile" "$screenshot_directory/$1.gif"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
 }
 
 record_window_as_mp4() {
   ffcast -q -w rec "$screenshot_directory/$1.mp4"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
 }
 
 record_window_as_gif() {
   tmpfile="/tmp/record-$1.mp4"
   ffcast -q -w rec "$tmpfile"
-  dunstify -a "$app_name" "Record" "Converting to gif… (can take a while)"
+  notify-send -a "$app_name" "Record" "Converting to gif… (can take a while)"
   video_to_gif "$tmpfile" "$screenshot_directory/$1.gif"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
 }
 
 record_screen_as_mp4() {
   countdown
   ffcast -q rec "$screenshot_directory/$1.mp4"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
 }
 
 record_screen_as_gif() {
   countdown
   tmpfile="/tmp/record-$1.mp4"
   ffcast -q rec "$tmpfile"
-  dunstify -a "$app_name" "Record" "Converting to gif… (can take a while)"
+  notify-send -a "$app_name" "Record" "Converting to gif… (can take a while)"
   video_to_gif "$tmpfile" "$screenshot_directory/$1.gif"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
+  notify-send -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.gif"
 }
 
 stop_recording() {
   if [ -z "$(pgrep -fxn '(/\S+)*ffmpeg\s.*\sx11grab\s.*')" ]; then
-    dunstify -a "$app_name" "Record" "No recording found"
+    notify-send -a "$app_name" "Record" "No recording found"
     exit 1
   fi
 
   pkill -fxn '(/\S+)*ffmpeg\s.*\sx11grab\s.*'
-  dunstify -a "$app_name" "Record" "Recording stopped"
+  notify-send -a "$app_name" "Record" "Recording stopped"
 }
 
 check_deps() {

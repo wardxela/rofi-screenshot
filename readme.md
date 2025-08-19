@@ -17,7 +17,6 @@ Plus, there's so many different things I might want to do I struggle to find key
 ### Notable differences from original version
 * Plugin is compatible with [rofi script](https://davatorium.github.io/rofi/current/rofi-script.5/) API
 * Works with combi mode
-* Notification daemon is replaced with [dunst](https://dunst-project.org/) (I might consider making it optional and modifiable in the future)
 * More user-friendly names for the options + Adwaita icons
 * Added metadata for options to make it easier to find them
 * Slightly better error handling

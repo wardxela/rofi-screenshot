@@ -36,31 +36,27 @@ countdown() {
 }
 
 capture_region_to_clipboard() {
-  dunstify -a "$app_name" "Screenshot" "Select a region to capture"
   tmpfile="/tmp/screenshot-$1.png"
-  ffcast -q "$(slop -n -f '-g %g ')" png "$tmpfile"
+  ffcast -q "$(slop -n -f '-g %g')" png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Region copied to Clipboard"
+  dunstify -a "$app_name" "Screenshot" "Region saved to Clipboard"
 }
 
 capture_region_to_file() {
-  dunstify -a "$app_name" "Screenshot" "Select a region to capture"
-  ffcast -q "$(slop -n -f '-g %g ')" png "$screenshot_directory/$1.png"
+  ffcast -q "$(slop -n -f '-g %g')" png "$screenshot_directory/$1.png"
   dunstify -a "$app_name" "Screenshot" "Region saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
 
 capture_window_to_clipboard() {
-  dunstify -a "$app_name" "Screenshot" "Select a window to capture"
   tmpfile="/tmp/screenshot-$1.png"
   ffcast -q -w png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Window copied to Clipboard"
+  dunstify -a "$app_name" "Screenshot" "Window saved to Clipboard"
 }
 
 capture_window_to_file() {
-  dunstify -a "$app_name" "Screenshot" "Select a window to capture"
   ffcast -q -w png "$screenshot_directory/$1.png"
   dunstify -a "$app_name" "Screenshot" "Window saved to ${screenshot_directory//${HOME}/~}/$1.png"
 }
@@ -70,7 +66,7 @@ capture_screen_to_clipboard() {
   ffcast -q png "$tmpfile"
   xclip -selection clipboard -t image/png "$tmpfile"
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Screenshot copied to Clipboard"
+  dunstify -a "$app_name" "Screenshot" "Screenshot saved to Clipboard"
 }
 
 capture_screen_to_file() {
@@ -83,17 +79,15 @@ extract_text_from_region() {
   ffcast -q "$(slop -n -f '-g %g')" png "$tmpfile"
   tesseract "$tmpfile" - -l eng+rus | xclip -selection clipboard
   rm "$tmpfile"
-  dunstify -a "$app_name" "Screenshot" "Text copied to Clipboard"
+  dunstify -a "$app_name" "Screenshot" "Text saved to Clipboard"
 }
 
 record_region_as_mp4() {
-  dunstify -a "$app_name" "Record" "Select a region to record"
   ffcast -q "$(slop -n -f '-g %g ' && countdown)" rec "$screenshot_directory/$1.mp4"
   dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
 }
 
 record_region_as_gif() {
-  dunstify -a "$app_name" "Record" "Select a region to record"
   tmpfile="/tmp/record-$1.mp4"
   ffcast -q "$(slop -n -f '-g %g ' && countdown)" rec "$tmpfile"
   dunstify -a "$app_name" "Record" "Converting to gif… (can take a while)"
@@ -103,13 +97,11 @@ record_region_as_gif() {
 }
 
 record_window_as_mp4() {
-  dunstify -a "$app_name" "Record" "Select a window to record"
   ffcast -q -w rec "$screenshot_directory/$1.mp4"
   dunstify -a "$app_name" "Record" "Saved to ${screenshot_directory//${HOME}/~}/$1.mp4"
 }
 
 record_window_as_gif() {
-  dunstify -a "$app_name" "Record" "Select a window to record"
   tmpfile="/tmp/record-$1.mp4"
   ffcast -q -w rec "$tmpfile"
   dunstify -a "$app_name" "Record" "Converting to gif… (can take a while)"
